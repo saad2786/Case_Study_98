@@ -34,3 +34,10 @@ cd insurance-management-system
 ![Alt text](database1.png)
 ![Alt text](database2.png)
 ![Alt text](database3.png)
+
+## Set configurations
+- In src\main\InitConnection.java
+- Replace 'MYSQL_CONNECTION_USERNAME' with your local mysql server connection username
+- Replace  'MYSQL_CONNECTION_PASSWORD' with your local mysql server connection password
+
+![Alt text](code.png)
