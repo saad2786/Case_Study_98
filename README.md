@@ -1,4 +1,4 @@
-# Insurance Management System
+# Insurance Agency Management System
 
 This is a Java-based application designed to manage insurance policies, clients, claims, and other related data. The application uses JDBC for database connectivity and MySQL as the backend database.
 
@@ -7,8 +7,6 @@ This is a Java-based application designed to manage insurance policies, clients,
 - Manage client information
 - Policy management
 - Claim processing
-- Premium calculations
-- Reporting and analytics
 
 ## Prerequisites
 
@@ -25,8 +23,8 @@ Before you begin, ensure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/insurance-management-system.git
-cd insurance-management-system
+git clone https://github.com/saad2786/Case_Study_98.git
+
 ```
 ## Create Databse and Tables on Mysql workbench
 - Create following three table (policy, client, claim)
@@ -41,3 +39,6 @@ cd insurance-management-system
 - Replace  'MYSQL_CONNECTION_PASSWORD' with your local mysql server connection password
 
 ![Alt text](code.png)
+
+## Run Java Application
+
