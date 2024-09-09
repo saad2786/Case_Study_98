@@ -1,24 +1,32 @@
 package main;
 
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
+import model.Claim;
+import model.Client;
+import model.Policy;
+import serviceDAO.ClaimDAO;
+import serviceDAO.ClientDAO;
+import serviceDAO.PolicyDAO;
+import serviceDAOImps.ClaimDAOImps;
+import serviceDAOImps.ClientDAOImps;
+import serviceDAOImps.PolicyDAOImps;
+
 public class Main {
 	public static void main(String[] args) {
-		Services services = new Services();
+	
 		
 			try {
 	      int opt;
 	      boolean iteration = true;
 	      Scanner sc = new Scanner(System.in);
-	     
+	      ClientDAO clientdao = new ClientDAOImps();
+	      PolicyDAO policydao = new PolicyDAOImps();
+	      ClaimDAO claimdao = new ClaimDAOImps();
 			while(iteration) {
 				System.out.println("Perform Operations: ");
 				System.out.println("1. Create New Policy ");
@@ -48,6 +56,7 @@ public class Main {
 				   }
 				  case 1: 
 				  {
+					  
 					  Policy policy = new Policy();
 					  System.out.println("Enter Policy Number: ");
 					  policy.setPolicy_number(sc.nextInt());
@@ -65,30 +74,35 @@ public class Main {
 					  policy.setPremium_amount(sc.nextInt());
 					  sc.nextLine(); 
 
-					  services.addPolicy(policy);
+					  policydao.addPolicy(policy);
 					  	
 				      break;
 				  }
 				
 			     case 2: {
-					services.viewPolicy();
+					  
+
+					policydao.viewPolicy();
 					break;
 				  }
 				  case 3: {
-					  services.viewPolicy();
+					
+					  policydao.viewPolicy();
 					  System.out.println("Enter Policy Id to be updated:");
 					  int id = sc.nextInt();
-					  services.updatePolicy(id);
+					  policydao.updatePolicy(id);
 						break;
 					  }
 				  case 4: {
-					  services.viewPolicy();
+				
+					  policydao.viewPolicy();
 					  System.out.println("Enter Policy Id to be deleted:");
 					  int id = sc.nextInt();
-					  services.deletePolicy(id);
+					  policydao.deletePolicy(id);
 						break;
 					  }
 				  case 5: {
+			
 					  Client client = new Client();
 					  sc.nextLine();  
 					  System.out.println("Enter Client Name: ");
@@ -102,7 +116,7 @@ public class Main {
 
 					  System.out.println("Enter Phone Number: ");
 					  String phone = sc.nextLine();
-					  client.setPhone_number(phone);;
+					  client.setPhone_number(phone);
 				 
 
 					  System.out.println("Enter Client Address: ");
@@ -110,38 +124,41 @@ public class Main {
 					  client.setAddress(address);
 					    
 
-					  services.registerClient(client);
+					  clientdao.registerClient(client);
 					  	
 						break;
 					  }
 				  case 6: {
-					  services.viewClient();
+			
+					  clientdao.viewClient();
 						break;
 					  }
 				  case 7: {
-					  services.viewClient();
+					
+					  clientdao.viewClient();
 					  System.out.println("Enter Client Id to be updated:");
 					  int id = sc.nextInt();
-					  services.updateClient(id);
+					  clientdao.updateClient(id);
 						break;
 					  }
 				  case 8: {
-					  services.viewClient();
+			
+					  clientdao.viewClient();
 					  System.out.println("Enter Client Id to be deleted:");
 					   int id = sc.nextInt();
-					   services.deleteClient(id);
+					   clientdao.deleteClient(id);
 						break;
 					  }
 				  case 9: {
 					  
 					  Claim claim = new Claim();
 					  sc.nextLine();  
-					  services.viewPolicy();
+					  policydao.viewPolicy();
 					  System.out.println("Enter Policy Id (Only available policies are allowed): ");
 					  int policy_id = sc.nextInt();
 					  claim.setPolicy_id(policy_id);
 
-					  services.viewClient();
+					  clientdao.viewClient();
 					  System.out.println("Enter Client Id(Only available policies are allowed): ");
 					  int client_id = sc.nextInt();
 					  claim.setClient_id(client_id);
@@ -149,7 +166,7 @@ public class Main {
 					
 					  String pattern = "yyyy-MM-dd";
 					  SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-					  claim.setClaim_date( simpleDateFormat.format(new Date()));;
+					  claim.setClaim_date( simpleDateFormat.format(new Date()));
 					  sc.nextLine();
 
 					  System.out.println("Enter Claim Status ( submitted / processed): ");
@@ -157,33 +174,51 @@ public class Main {
 					  claim.setStatus(status);	
 					    
 
-					  services.submitClaim(claim);
+					  claimdao.submitClaim(claim);
 					  	
 						break;
 					  }
 				  case 10: {
-					  services.viewClaim();
+					  claimdao.viewClaim();
 						break;
 					  }
 				  case 11: {
-					  services.viewClaim();
+					  claimdao.viewClaim();
 					  System.out.println("Enter Claim Id to be updated:");
 					  int id = sc.nextInt();
-					  services.updateClaim(id);
+					  claimdao.updateClaim(id);
 						break;
 					  }
 				  case 12: {
-					  services.viewClaim();
+					  claimdao.viewClaim();
 					  System.out.println("Enter Claim Id to be deleted:");
 					   int id = sc.nextInt();
-					   services.deleteClaim(id);
+					   claimdao.deleteClaim(id);
 						break;
 					  }
 				  case 13: {
-					  services.viewClaim();
+					  claimdao.viewClaim();
 					  System.out.println("Enter Claim Id to be updated:");
 					  int id = sc.nextInt();
-					  services.updateClaimStatus(id);
+					  claimdao.updateClaimStatus(id);
+						break;
+					  }
+					  case 14: {
+						  ArrayList<String> headings = new ArrayList<>();
+						  ArrayList<String> row = new ArrayList<>();
+						  headings.add("Id");
+						  headings.add("name");
+						  headings.add("phone");
+						  headings.add("address");
+
+						  row.add("1");
+						  row.add("saad");
+						  row.add("2342324");
+						  row.add("VAddi");
+
+						  ArrayList<ArrayList<String>> data = new ArrayList<>();
+						 data.add(row);
+						 PrintTable.printTable(headings, data);
 						break;
 					  }
 				  default:{
@@ -196,8 +231,7 @@ public class Main {
 			sc.close();
 			
 			  } catch (Exception e) {
-			
-				  e.printStackTrace();
+				System.err.println(e.getMessage());
 			  }
 
 			
